@@ -1,86 +1,40 @@
 package ru.hse.kw.model;
 
+import java.util.List;
+
+/**
+ * Created by Krist on 08.05.2016.
+ */
 public class User {
+    private final long id;
+    private final String name;
+    private final String lastName;
+    private List<Task> tasks;
 
-	private long id;
-	
-	private String username;
-	
-	private String address;
-	
-	private String email;
-	
-	public User(){
-		id=0;
-	}
-	
-	public User(long id, String username, String address, String email){
-		this.id = id;
-		this.username = username;
-		this.address = address;
-		this.email = email;
-	}
+    public User(long id, String name, String lastName, List<Task> tasks) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.tasks = tasks;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public List<Task> getTasks() {
+        return tasks;
+    }
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof User))
-			return false;
-		User other = (User) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", address=" + address
-				+ ", email=" + email + "]";
-	}
-	
-
-	
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
 }
