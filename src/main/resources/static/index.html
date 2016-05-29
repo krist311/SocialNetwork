@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Social network</title>
+	<meta charset="utf-8">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.jeditable.mini.js"></script>
+	<script src="js/select2.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+
+	<script src="js/angular.js"></script>
+	<script src="js/angular-route.js"></script>
+	<script src="js/angular-resource.js"></script>
+	<script src="js/xeditable.js"></script>
+	<script src="js/ui-bootstrap-tpls.min.js"></script>
+
+
+	<script src="js/app.js"></script>
+	<script src="js/service/user_service.js"></script>
+	<script src="js/controller/controllers.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<link href="css/app.css" rel="stylesheet">
+</head>
+<body ng-app="myNetwork" class="ng-cloak">
+<table>
+	<tr>
+		<td style="vertical-align: top">
+			<ul class="nav nav-pills nav-stacked">
+				<li role="presentation" class="active"><a href="#/home">Home</a></li>
+				<li role="presentation"><a href="#/friends">Friends</a></li>
+				<li role="presentation"><a href="#/messages">Messages</a></li>
+				<li role="presentation"><a href="#/settings">Settings</a></li>
+				<li role="presentation"><a href="#/exit">Exit</a></li>
+			</ul>
+		</td>
+		<td><ng-view></ng-view></td>
+	</tr>
+</table>
+
+</body>
+</html>

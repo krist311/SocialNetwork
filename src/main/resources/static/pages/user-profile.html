@@ -1,0 +1,142 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="well panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <img src="http://api.randomuser.me/portraits/women/21.jpg" alt="" class="center-block img-circle img-thumbnail img-responsive">
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-8">
+                            <h2>jane_doe</h2>
+                            <p><strong>Info: </strong> Bla Bla Bla. </p>
+                            <p><strong>Awards: </strong>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-trophy" aria-hidden="true"></i>
+                                <i class="fa fa-trophy" aria-hidden="true"></i>
+                                <i class="fa fa-trophy" aria-hidden="true"></i>
+                            </p>
+                            <p><strong>Tags: </strong>
+                                <span class="label label-info tags">running</span>
+                                <span class="label label-info tags">guitar</span>
+                                <span class="label label-info tags">Spanish</span>
+                                <span class="label label-info tags">cooking</span>
+                            </p>
+                        </div>
+                        <!--/col-->
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <h2><strong> 20,7K </strong></h2>
+                            <p><small>Followers</small>
+                            </p>
+                            <button class="btn btn-info btn-block"><span class="fa fa-th-list"></span> Follower List </button>
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <h2><strong>245</strong></h2>
+                            <p><small>Following</small>
+                            </p>
+                            <button class="btn btn-info btn-block"><span class="fa fa-th-list"></span> Following List </button>
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <h2><strong>43</strong></h2>
+                            <p><small>Completed tasks</small>
+                            </p>
+                            <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Edit Page </button>
+                            <!-- HIDDEN VARIANT FOR NOT OWN PAGE: "FOLLOW/UNFOLLOW" BUTTON -->
+                            <button type="button" class="btn btn-success btn-block hidden"><span class="fa fa-plus-circle"></span> Follow </button>
+                        </div>
+                        <!--/col-->
+                    </div>
+                    <!--/row-->
+                    <hr>
+
+                    <h3 class="text-center">Tasks</h3>
+
+                    <!--<div ng-controller="EditableRowCtrl">-->
+                    <div>
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:15%">Name</td>
+                                <td style="width:15%">Date</td>
+                                <td style="width:30%">Description</td>
+                                <td style="width:20%">Tags</td>
+                                <td style="width:20%">Actions</td>
+                            </tr>
+                            <tr ng-repeat="task in tasks">
+                                <td>
+                                    <!-- editable taskname -->
+                                    <span editable-text="task.name" e-name="name" e-form="rowform" e-required onbeforesave="check($data)">
+          {{ task.name }}
+        </span>
+                                </td>
+                                <td>
+                                    <!--<a editable-bsdate="task.date" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datepicker-popup="dd-MMMM-yyyy" e-form="rowform">-->
+                                        <!--{{ (task.date | date:"dd/MM/yyyy") || 'empty' }}-->
+                                    <!--</a>-->
+
+                                    <span onbeforesave="check($data)" e-form="rowform" e-required editable-bsdate="task.date" e-ng-click="opened = !opened" e-is-open="opened" e-datepicker-popup="dd.MM.yyyy" e-name="date">
+                                        {{(task.date | date:"dd.MM.yyyy")}}
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- editable description  -->
+                                    <span editable-text="task.description" e-name="description" e-form="rowform">
+          {{ task.description }}
+        </span>
+                                </td>
+                                <td>
+                                    <!-- editable tags  -->
+                                    <span editable-text="task.tags" e-name="tags" e-form="rowform" e-required>
+          {{ task.tags }}
+        </span>
+
+
+                                    <!--<div id="container" class="row">-->
+                                        <!--<div class="controls controls-row">-->
+                                            <!--<span class="tags" id="tags-editable-1"-->
+                                                <!--data-toggle="manual" data-type="select2" data-pk="1"-->
+                                                <!--data-value="apples, oranges, pie" data-original-title="Enter tags">-->
+                                            <!--</span>-->
+                                            <!--<a href="#" id="tags-edit-1" data-editable="tags-editable-1" class=""><i class="icon-pencil"></i></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                </td>
+                                <td style="white-space: nowrap">
+                                    <!-- form -->
+                                    <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == task">
+                                        <button type="submit" ng-click="saveTask($data, task.id)" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                            save
+                                        </button>
+                                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                                            cancel
+                                        </button>
+                                    </form>
+                                    <div class="buttons" ng-show="!rowform.$visible">
+                                        <button class="btn btn-success" ng-click="done($index)">done</button>
+                                        <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                                        <button class="btn btn-danger" ng-click="giveUp($index)">give up</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <button class="btn btn-default" ng-click="addTask()">Add task</button>
+                    </div>
+
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+</div>
+<!--/container-->

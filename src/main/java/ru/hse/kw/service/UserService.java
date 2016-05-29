@@ -1,8 +1,8 @@
 package ru.hse.kw.service;
 
-import java.util.List;
 import ru.hse.kw.model.User;
 
+import java.util.List;
 
 
 public interface UserService {

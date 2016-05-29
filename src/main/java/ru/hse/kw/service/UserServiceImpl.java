@@ -1,18 +1,18 @@
 package ru.hse.kw.service;
 
+import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Transactional;
+import ru.hse.kw.model.Task;
+import ru.hse.kw.model.User;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import ru.hse.kw.model.Task;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import ru.hse.kw.model.User;
 
 @Service("userService")
-@Transactional
-public class UserServiceImpl implements UserService{
+//@Transactional
+public class UserServiceImpl implements UserService {
 	
 	private static final AtomicLong counter = new AtomicLong();
 	
