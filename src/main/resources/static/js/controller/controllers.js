@@ -1,6 +1,8 @@
 'use strict';
 
-Network.config(['$routeProvider', '$httpProvider', function($routeProvide, $httpProvider){
+Network.config(['$routeProvider', '$httpProvider','$locationProvider', function($routeProvide, $httpProvider, $locationProvider){
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    $locationProvider.html5Mode(true);
     $routeProvide
         .when('/home',{
             templateUrl:'pages/user-profile.html',
@@ -21,13 +23,11 @@ Network.config(['$routeProvider', '$httpProvider', function($routeProvide, $http
         .when('/exit',{
             templateUrl:'pages/sign-in-sign-up.html',
             controller:'LoginController as ctrl'
-        })
-    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+        });
 
     //.otherwise({
            //redirectTo: '/'
-       // })
-    ;
+       // });
 }]);
 Network.controller('HomeCtrl', ['$scope', 'User', '$http', '$routeParams', function($scope, User, $http, $routeParams) {
     $scope.id=$routeParams.id;
@@ -44,9 +44,17 @@ Network.controller('MessagesCtrl',['$scope','$http', '$location', function($scop
 Network.controller('SettingsCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 }]);
-Network.controller('LoginController', function($rootScope, $http, $location) {
+Network.controller('LoginController', function($rootScope, $http, $location, $window) {
 
     var self = this
+    self.logout = function() {
+        $http.post('logout', {}).finally(function() {
+            $rootScope.authenticated = false;
+            $location.path("/exit");
+        });
+    }
+    if($rootScope.authenticated)
+        logout();
 
     var authenticate = function(credentials, callback) {
 
@@ -73,13 +81,19 @@ Network.controller('LoginController', function($rootScope, $http, $location) {
     self.login = function() {
         authenticate(self.credentials, function() {
             if ($rootScope.authenticated) {
-                $location.path("/home");
                 self.error = false;
+                $window.location.href = '/home';
             } else {
                 $location.path("/exit");
                 self.error = true;
             }
         });
     };
+    self.logout = function() {
+        $http.post('logout', {}).finally(function() {
+            $rootScope.authenticated = false;
+            //$location.path("/exit");
+        });
+    }
 });
 

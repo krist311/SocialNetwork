@@ -8,28 +8,46 @@ import java.util.UUID;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 @SpringBootApplication
 @RestController
 public class UiApplication {
 
 	@RequestMapping("/resource")
-	public Map<String,Object> home() {
-		Map<String,Object> model = new HashMap<String,Object>();
+	public Map<String, Object> home() {
+		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("id", UUID.randomUUID().toString());
 		model.put("content", "Hello World");
 		return model;
 	}
+
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
 		return user;
 	}
+
+	@RequestMapping("/settings")
+	public String settings() {
+		return "settings";
+	}
+
 	@Configuration
 	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 	protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -38,14 +56,34 @@ public class UiApplication {
 			http
 					.httpBasic()
 					.and()
+					.formLogin()
+					.loginProcessingUrl("/")
+					.permitAll()
+					.and()
+					.headers()
+					.frameOptions()
+					.disable()
+					.and()
 					.authorizeRequests()
-					.antMatchers("/index.html", "/o8opages/user-profile.html", "/pages/sign-in-sign-up.html", "/").permitAll()
+					.antMatchers("/").permitAll()
 					.anyRequest().authenticated();
 		}
 	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(UiApplication.class, args);
-	}
+	@Configuration
+	protected static class DefaultView extends WebMvcConfigurerAdapter {
 
+		@Override
+		public void addViewControllers(ViewControllerRegistry registry) {
+			registry.addViewController("/").setViewName("forward:/sign-in-sign-up.html");
+			registry.addViewController( "/home" ).setViewName( "forward:/pages/index.html" );
+			registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+			super.addViewControllers(registry);
+		}
+
+		public static void main(String[] args) {
+			SpringApplication.run(UiApplication.class, args);
+		}
+
+	}
 }

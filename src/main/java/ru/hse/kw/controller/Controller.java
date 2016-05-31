@@ -31,8 +31,8 @@ public class Controller {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/saveuser", method = RequestMethod.POST)
-    public HttpStatus saveUser() {
+    @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
+    public HttpStatus saveTask() {
         List<User> users = userService.findAllUsers();
         //users.add()
         return HttpStatus.OK;

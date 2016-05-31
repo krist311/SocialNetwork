@@ -6,7 +6,6 @@ Network.run(function(editableOptions) {
 });
 
 Network.controller('EditableRowCtrl', function($scope, $filter, $http) {
-
     $scope.tasks = [
         {id: 1, name: 'awesadfasdfr1', date: new Date(2017, 4, 15), description: 'dfd', tags: 'admin'},
         {id: 2, name: 'awesdfas', date: undefined, description: 3, tags: 'vip'},
@@ -45,12 +44,17 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http) {
         //by default:
         $scope.inserted = {
             id: $scope.tasks.length+1,
-            // name: '',
-            // date: '',
-            // description: 'One good deed for the benefit of all life on the Earth',
+            //name: '',
+            //date: '',
+            //description: 'One good deed for the benefit of all life on the Earth',
             // tags: 'kindness'
         };
         $scope.tasks.push($scope.inserted);
+    };
+    $scope.saveTask = function(data, id) {
+//$scope.user not updated yet
+        angular.extend(data, {id: id});
+        return $http.post('/saveUser', data);
     };
 
 
