@@ -50,11 +50,9 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
     self.logout = function() {
         $http.post('logout', {}).finally(function() {
             $rootScope.authenticated = false;
-            $location.path("/exit");
+            $window.location.href = '/';
         });
-    }
-    if($rootScope.authenticated)
-        logout();
+    };
 
     var authenticate = function(credentials, callback) {
 
@@ -89,11 +87,5 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
             }
         });
     };
-    self.logout = function() {
-        $http.post('logout', {}).finally(function() {
-            $rootScope.authenticated = false;
-            //$location.path("/exit");
-        });
-    }
 });
 

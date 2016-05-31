@@ -27,12 +27,12 @@
 <table>
     <tr>
         <td style="vertical-align: top">
-            <ul class="nav nav-pills nav-stacked">
+            <ul class="nav nav-pills nav-stacked" ng-controller="LoginController as ctrl">
                 <li role="presentation" class="active"><a href="/home">Home</a></li>
                 <li role="presentation"><a href="/friends">Friends</a></li>
                 <li role="presentation"><a href="/messages">Messages</a></li>
                 <li role="presentation"><a href="/settings">Settings</a></li>
-                <li role="presentation"><a href="/">Exit</a></li>
+                <li role="presentation"><a href="/" ng-click="ctrl.logout()">Exit</a></li>
             </ul>
         </td>
         <td><ng-view></ng-view></td>
