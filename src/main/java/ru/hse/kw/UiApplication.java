@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jersey.JerseyProperties;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +31,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -60,16 +65,23 @@ public class UiApplication {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http
+					.authorizeRequests()
+					.anyRequest().authenticated()
+					.and()
+					.formLogin()
+					.and()
+					.httpBasic().disable()
+					.csrf().disable()
 					.httpBasic()
 					.and()
 					.formLogin()
 					.loginProcessingUrl("/")
-					.permitAll()
+					.permitAll().and()/*
 					.and()
 					.headers()
 					.frameOptions()
 					.disable()
-					.and()
+					.and()*/
 					.authorizeRequests()
 					.antMatchers("/").permitAll()
 					.anyRequest().authenticated();

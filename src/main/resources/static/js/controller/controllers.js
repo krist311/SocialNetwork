@@ -46,7 +46,7 @@ Network.controller('SettingsCtrl',['$scope','$http', '$location', function($scop
 }]);
 Network.controller('LoginController', function($rootScope, $http, $location, $window) {
 
-    var self = this
+    var self = this;
     self.logout = function() {
         $http.get('logout', {}).finally(function() {
             $rootScope.authenticated = false;
