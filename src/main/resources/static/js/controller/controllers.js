@@ -48,7 +48,7 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
 
     var self = this
     self.logout = function() {
-        $http.post('logout', {}).finally(function() {
+        $http.get('logout', {}).finally(function() {
             $rootScope.authenticated = false;
             $window.location.href = '/';
         });
