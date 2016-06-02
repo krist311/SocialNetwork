@@ -72,8 +72,8 @@
                                 <td>
                                     <!-- editable taskname -->
                                     <span editable-text="task.name" e-name="name" e-form="rowform" e-required onbeforesave="check($data)">
-          {{ task.name }}
-        </span>
+                                      {{ task.name }}
+                                    </span>
                                 </td>
                                 <td>
                                     <!--<a editable-bsdate="task.date" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datepicker-popup="dd-MMMM-yyyy" e-form="rowform">-->
@@ -87,14 +87,14 @@
                                 <td>
                                     <!-- editable description  -->
                                     <span editable-text="task.description" e-name="description" e-form="rowform">
-          {{ task.description }}
-        </span>
+                                      {{ task.description }}
+                                    </span>
                                 </td>
                                 <td>
                                     <!-- editable tags  -->
                                     <span editable-text="task.tags" e-name="tags" e-form="rowform" e-required>
-          {{ task.tags }}
-        </span>
+                                      {{ task.tags }}
+                                    </span>
 
 
                                     <!--<div id="container" class="row">-->
@@ -110,8 +110,8 @@
                                 </td>
                                 <td style="white-space: nowrap">
                                     <!-- form -->
-                                    <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == task">
-                                        <button type="submit" ng-click="saveTask($data, task.id)" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                    <form editable-form name="rowform" onbeforesave="saveTask($data, task.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == task">
+                                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                                             save
                                         </button>
                                         <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">

@@ -13,16 +13,13 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http) {
     ];
 
     $scope.opened = {};
+    $scope.data = {};
 
     $scope.open = function($event, elementOpened) {
         $event.preventDefault();
         $event.stopPropagation();
 
         $scope.opened[elementOpened] = !$scope.opened[elementOpened];
-    };
-
-    $scope.saveTask = function(data, id) {
-        //THERE MUST BE THE MESSAGE TO DB
     };
 
     $scope.giveUp = function(index) {
@@ -44,10 +41,10 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http) {
         //by default:
         $scope.inserted = {
             id: $scope.tasks.length+1,
-            //name: '',
-            //date: '',
-            //description: 'One good deed for the benefit of all life on the Earth',
-            // tags: 'kindness'
+            name: '',
+            date: '',
+            description: '',
+            tags: ''
         };
         $scope.tasks.push($scope.inserted);
     };

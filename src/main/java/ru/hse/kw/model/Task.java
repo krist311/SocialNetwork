@@ -1,27 +1,63 @@
 package ru.hse.kw.model;
 
-/**
- * Created by Krist on 08.05.2016.
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Tasks")
 public class Task {
-    private final String name;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "progress", nullable = false)
     private int progress;
-    private final int goal;
-    public Task(String name, int goal){
+
+    @Column(name = "goal", nullable = false)
+    private int goal;
+
+    @Column(name = "tag", nullable = false)
+    private String tag;
+
+    public Task() {
+    }
+
+    public Task(int id, String name, int progress, int goal, String tag) {
+        this.id = id;
         this.name = name;
-        progress=0;
+        this.progress = progress;
+        this.goal = goal;
+        this.tag = tag;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public void setGoal(int goal) {
         this.goal = goal;
     }
-    public int getProgress(){
-        return progress;
+
+    public String getTag() {
+        return tag;
     }
-    public String getName(){
-        return name;
-    }
-    public void increaseProgress(){
-        progress++;
-    }
-    public int getGoal(){
-        return goal;
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

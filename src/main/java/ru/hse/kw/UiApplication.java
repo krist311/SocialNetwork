@@ -1,19 +1,13 @@
 package ru.hse.kw;
 
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jersey.JerseyProperties;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Role;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
@@ -21,43 +15,35 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import ru.hse.kw.model.User;
+import ru.hse.kw.service.AuthentificationService;
+import ru.hse.kw.service.UserService;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SpringBootApplication
 @RestController
 public class UiApplication {
+
 	@Autowired
-	AuthenticationService authenticationService;
+    AuthentificationService authentificationService;
+
+	@Autowired
+	UserService userService;
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		ShaPasswordEncoder encoder = new ShaPasswordEncoder();
-		auth.userDetailsService(authenticationService).passwordEncoder(encoder);
+		auth.userDetailsService(authentificationService).passwordEncoder(encoder);
 	}
 
 	@RequestMapping("/user")
@@ -116,17 +102,5 @@ public class UiApplication {
 			SpringApplication.run(UiApplication.class, args);
 		}
 
-	}
-	@Service
-	protected static class AuthenticationService implements UserDetailsService {
-		@Override
-		public UserDetails loadUserByUsername(String username)
-				throws UsernameNotFoundException {
-			User userInfo = new User(1,"vasya", "21a4ed0a0cf607e77e93bf7604e2bb1ad07757c5", null);
-			GrantedAuthority authority = new SimpleGrantedAuthority("USER");
-			UserDetails userDetails = (UserDetails)new org.springframework.security.core.userdetails.User(userInfo.getLogin(),
-					userInfo.getPassword(), Arrays.asList(authority));
-			return userDetails;
-		}
 	}
 }

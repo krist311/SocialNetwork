@@ -1,40 +1,81 @@
 package ru.hse.kw.model;
 
-import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
-/**
- * Created by Krist on 08.05.2016.
- */
+@Entity
+@Table(name="Users")
 public class User {
-    private final long id;
-    private final String login;
-    private List<Task> tasks;
-    private String password;
 
-    public User(long id, String login, String password, List<Task> tasks) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Size(min=3, max=50)
+    @Column(name = "login", nullable = false)
+    private String login;
+
+    @Size(min=3, max=50)
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Size(min=3, max=50)
+    @Column(name = "info", nullable = false)
+    private String info;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private UsersPasswords usersPassword;
+
+    public User() {}
+
+    public User(int id, String login, String email, String info, String password) {
         this.id = id;
         this.login = login;
-        this.password = password;
-        this.tasks = tasks;
+        this.email = email;
+        this.info = info;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getPassword() {
-        return password;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
+    public String getInfo() {
+        return info;
     }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+
+    public UsersPasswords getUsersPassword() {
+        return usersPassword;
+    }
+
+    public void setUsersPassword(UsersPasswords usersPassword) {
+        this.usersPassword = usersPassword;
+    }
+
+
 }
