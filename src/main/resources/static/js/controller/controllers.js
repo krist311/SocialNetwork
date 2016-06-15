@@ -4,7 +4,7 @@ Network.config(['$routeProvider', '$httpProvider','$locationProvider', function(
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     $locationProvider.html5Mode(true);
     $routeProvide
-        .when('/home',{
+        .when('/home/:login',{
             templateUrl:'pages/user-profile.html',
             controller:'EditableRowCtrl as ctrl'
         })
@@ -31,7 +31,7 @@ Network.config(['$routeProvider', '$httpProvider','$locationProvider', function(
 }]);
 Network.controller('HomeCtrl', ['$scope', 'User', '$http', '$routeParams', function($scope, User, $http, $routeParams) {
     $scope.id=$routeParams.id;
-    $http.get('user/'+ $scope.id).success(function(data) {
+    $http.get('getuser/'+ $scope.id).success(function(data) {
         $scope.user = data;
     });
 }]);
@@ -63,6 +63,7 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
         $http.get('user', {headers : headers}).then(function(response) {
             if (response.data.name) {
                 $rootScope.authenticated = true;
+                $rootScope.userLogin = response.data.name;
             } else {
                 $rootScope.authenticated = false;
             }
@@ -80,7 +81,7 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
         authenticate(self.credentials, function() {
             if ($rootScope.authenticated) {
                 self.error = false;
-                $window.location.href = '/home';
+                $window.location.href = '/home/' + $rootScope.userLogin;
             } else {
                 $location.path("/exit");
                 self.error = true;

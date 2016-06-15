@@ -40,12 +40,12 @@ public class Controller {
 
     //-------------------Retrieve Single User--------------------------------------------------------
 
-    @RequestMapping(value = "/user1234/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUser(@PathVariable("id") int id) {
-        System.out.println("Fetching User with id " + id);
-        User user = userService.findById(id);
+    @RequestMapping(value = "/getuser/{login}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUser(@PathVariable("login") String login) {
+        System.out.println("Fetching User with login " + login);
+        User user = userService.findByLogin(login);
         if (user == null) {
-            System.out.println("User with id " + id + " not found");
+            System.out.println("User with id " + login + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);

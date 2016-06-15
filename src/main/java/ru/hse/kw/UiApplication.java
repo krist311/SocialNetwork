@@ -59,24 +59,33 @@ public class UiApplication {
 			http
 					.authorizeRequests()
 					.anyRequest().authenticated()
-					.and()
+					.and().authorizeRequests()
+					.antMatchers("/").permitAll().and()
 					.formLogin()
+					.loginPage("/sign-in-sign-up.html")
+					.permitAll()
+					.and()
+					.logout()
+					.logoutUrl("/logout")
+					.logoutSuccessUrl("/login")
+					/*.formLogin()*/
 					.and()
 					.httpBasic().disable()
 					.csrf().disable()
-					.httpBasic()
-					.and()
-					.formLogin()
-					.loginProcessingUrl("/")
+					.httpBasic();
+					/*.and()
+					/*.formLogin().and()
+					/*.loginProcessingUrl("/login")
 					.permitAll().and()/*
 					.and()
 					.headers()
 					.frameOptions()
 					.disable()
-					.and()*/
-					.authorizeRequests()
-					.antMatchers("/").permitAll()
-					.anyRequest().authenticated();
+					.and()
+					.authorizeRequests()*/
+					/*.antMatchers("/").permitAll()
+					.antMatchers("/login").permitAll()
+					.anyRequest().authenticated();*/
 		}
 	}
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
@@ -92,8 +101,9 @@ public class UiApplication {
 
 		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
-			registry.addViewController("/").setViewName("forward:/sign-in-sign-up.html");
-			registry.addViewController("/home").setViewName( "forward:/pages/index.html" );
+			//registry.addViewController("/").setViewName("forward:/sign-in-sign-up.html");
+			registry.addViewController("/home/*").setViewName("forward:/pages/index.html" );
+			registry.addViewController("/login").setViewName("forward:/sign-in-sign-up.html");
 			registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 			super.addViewControllers(registry);
 		}
