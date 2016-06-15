@@ -5,10 +5,12 @@ Network.run(function(editableOptions) {
     editableOptions.theme = 'bs3';
 });
 
-Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routeParams) {
+Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routeParams, $location,$rootScope) {
     $scope.userLogin=$routeParams.login;
     $http.get('getuser/'+ $scope.userLogin).success(function(data) {
         $scope.user = data;
+    }).error(function(){
+        $location.path("/home/"+$rootScope.userLogin);
     });
     $scope.tasks = [
         {id: 1, name: 'awesadfasdfr1', date: new Date(2017, 4, 15), description: 'dfd', tags: 'admin'},
