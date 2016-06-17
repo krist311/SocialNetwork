@@ -7,7 +7,9 @@
     <script src="js/jquery.jeditable.mini.js"></script>
     <script src="js/select2.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <!-- doesn't work with local including, idk why: -->
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">-->
 
     <script src="js/angular.js"></script>
     <script src="js/angular-route.js"></script>
@@ -29,9 +31,7 @@
         <td style="vertical-align: top">
             <ul class="nav nav-pills nav-stacked" ng-controller="LoginController as ctrl">
                 <li role="presentation" class="active"><a href={{'home/'+userLogin}}>Home</a></li>
-                <li role="presentation"><a href="/friends">Friends</a></li>
-                <li role="presentation"><a href="/messages">Messages</a></li>
-                <li role="presentation"><a href="/settings">Settings</a></li>
+                <li role="presentation"><a href="/friends">Users</a></li>
                 <li role="presentation"><a href="/" ng-click="ctrl.logout()">Exit</a></li>
             </ul>
         </td>
