@@ -73,7 +73,7 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
             callback && callback();
         });
 
-    }
+    };
 
     authenticate();
     self.credentials = {};

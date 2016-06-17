@@ -111,3 +111,24 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
 // });
 //
 // });
+
+function confirmPassword() {
+ //   window.onload = function confirmPassword() {
+        var pass1 = document.getElementById("pass1").value;
+        var pass2 = document.getElementById("pass2").value;
+        var alrt = document.getElementById("alert");
+        var ok = true;
+        if (pass1 != pass2) {
+            alrt.innerHTML = '<div class="alert alert-danger alert-dismissible" id="alert"> <a class="panel-close close" data-dismiss="alert">×</a> <i class="fa fa-ban"></i> Passwords do not match. </div>';
+            document.getElementById("pass1").style.borderColor = "#E34234";
+            document.getElementById("pass2").style.borderColor = "#E34234";
+            ok = false;
+        }
+        else if (pass1 != "" && pass2 != "") {
+            alrt.innerHTML = '<div class="alert alert-success alert-dismissible" id="alert"> <a class="panel-close close" data-dismiss="alert">×</a> <i class="fa fa-check"></i> Success </div>';
+            document.getElementById("pass1").style.borderColor = "#ccc";
+            document.getElementById("pass2").style.borderColor = "#ccc";
+        }
+        return ok;
+ //   }
+}
