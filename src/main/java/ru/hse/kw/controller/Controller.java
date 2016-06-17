@@ -36,11 +36,17 @@ public class Controller {
     }
 
     @RequestMapping(value = "/savetask", method = RequestMethod.POST)
-    public HttpStatus saveTask(@RequestBody String valueOne) {
+     public HttpStatus saveTask(@RequestBody String value) {
         BasicJsonParser jsonParser = new BasicJsonParser();
-        Map taskMap = jsonParser.parseMap(valueOne);
+        Map taskMap = jsonParser.parseMap(value);
         Task task = new Task((String)taskMap.get("name"),(String)taskMap.get("date"),(String)taskMap.get("description"),(String)taskMap.get("tags"));
-        System.out.print(jsonParser.parseMap(valueOne));
+        return HttpStatus.OK;
+    }
+    @RequestMapping(value = "/registeruser", method = RequestMethod.POST)
+    public HttpStatus registerUser(@RequestBody String value) {
+        BasicJsonParser jsonParser = new BasicJsonParser();
+        Map taskMap = jsonParser.parseMap(value);
+        User task = new User((String)taskMap.get("login"),(String)taskMap.get("password"));
         return HttpStatus.OK;
     }
 

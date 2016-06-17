@@ -9,6 +9,7 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
     $scope.userLogin=$routeParams.login;
     $http.get('getuser/'+ $scope.userLogin).success(function(data) {
         $scope.user = data;
+        $scope.currentId=data.id;
         if(data.login === $rootScope.userLogin){
         $scope.myElementClass='';
         $scope.foreignElementClass='hidden';
@@ -20,11 +21,16 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
     }).error(function(){
         $location.path("/home/"+$rootScope.userLogin);
     });
-    $scope.tasks = [
+    $http.get('gettasks/'+ $scope.currentId).success(function(data) {
+        $scope.tasks = data;
+    }).error(function(){
+        alert('Unable to fetch tasks');
+    });
+    /*$scope.tasks = [
         {id: 1, name: 'awesadfasdfr1', date: new Date(2017, 4, 15), description: 'dfd', tags: 'admin'},
         {id: 2, name: 'awesdfas', date: undefined, description: 3, tags: 'vip'},
         {id: 3, name: 'awesasdf3', date: 2, description: null}
-    ];
+    ];*/
 
     $scope.opened = {};
     $scope.data = {};
@@ -68,7 +74,7 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
         $http.post('/savetask', data).success(function(data) {
 
         }).error(function(){
-           alert("AJAX ERROR");
+            alert("AJAX ERROR");
         });
     };
 
