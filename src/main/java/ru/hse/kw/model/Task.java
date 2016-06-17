@@ -10,8 +10,14 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "user_id", nullable = false)
+    private int user_id;
+
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @Column(name = "progress", nullable = false)
     private int progress;
@@ -41,6 +47,26 @@ public class Task {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public int getGoal() {
+        return goal;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -60,4 +86,5 @@ public class Task {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
 }

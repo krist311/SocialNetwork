@@ -1,24 +1,24 @@
 package ru.hse.kw.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="users_passwords")
 public class UsersPasswords {
 
     @Id
-    private int user_id;
+    @Column(name = "user_id")
+    private int userId;
 
     @Column(name = "password")
     private String password;
 
     public int getUserId() {
-        return user_id;
+        return userId;
     }
 
     public void setUserId(int userId) {
-        this.user_id = userId;
+        this.userId = userId;
     }
 
     public String getPassword() {

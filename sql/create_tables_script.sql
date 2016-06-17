@@ -41,8 +41,8 @@ INSERT INTO users VALUES
 (2, 'user2', 'user2@gmail.com', 'user2_info');
 
 INSERT INTO users_passwords VALUES
-(1, 'password'),
-(2, 'password');
+(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'),
+(2, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
 INSERT INTO followers VALUES
 (1, 2);

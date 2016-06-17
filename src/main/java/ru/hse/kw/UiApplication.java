@@ -68,24 +68,10 @@ public class UiApplication {
 					.logout()
 					.logoutUrl("/logout")
 					.logoutSuccessUrl("/login")
-					/*.formLogin()*/
 					.and()
 					.httpBasic().disable()
 					.csrf().disable()
 					.httpBasic();
-					/*.and()
-					/*.formLogin().and()
-					/*.loginProcessingUrl("/login")
-					.permitAll().and()/*
-					.and()
-					.headers()
-					.frameOptions()
-					.disable()
-					.and()
-					.authorizeRequests()*/
-					/*.antMatchers("/").permitAll()
-					.antMatchers("/login").permitAll()
-					.anyRequest().authenticated();*/
 		}
 	}
 	@RequestMapping(value="/logout", method = RequestMethod.GET)

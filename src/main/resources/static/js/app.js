@@ -9,14 +9,23 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
     $scope.userLogin=$routeParams.login;
     $http.get('getuser/'+ $scope.userLogin).success(function(data) {
         $scope.user = data;
+        $scope.currentId=$scope.user.id;
+        if(data.login === $rootScope.userLogin){
+            $scope.myElementClass='';
+            $scope.foreignElementClass='hidden';
+        } else {
+            $scope.myElementClass='hidden';
+            $scope.foreignElementClass='';
+        }
+
+        $http.get('gettasks/'+ $scope.currentId).success(function(data) {
+            $scope.tasks = data;
+        }).error(function(){
+            alert('Unable to fetch tasks');
+        });
     }).error(function(){
         $location.path("/home/"+$rootScope.userLogin);
     });
-    $scope.tasks = [
-        {id: 1, name: 'awesadfasdfr1', date: new Date(2017, 4, 15), description: 'dfd', tags: 'admin'},
-        {id: 2, name: 'awesdfas', date: undefined, description: 3, tags: 'vip'},
-        {id: 3, name: 'awesasdf3', date: 2, description: null}
-    ];
 
     $scope.opened = {};
     $scope.data = {};
@@ -62,40 +71,3 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
 
 
 });
-
-// $(document).ready( function() {
-//     $.fn.editable.defaults.mode = 'popover';
-//
-// $('.tags').editable({
-//     placement: 'right',
-//     select2: {
-//         tags: ['cake', 'cookies'],
-//         tokenSeparators: [",", " "]
-//     },
-//     display: function(value) {
-//         $.each(value,function(i){
-//             // value[i] needs to have its HTML stripped, as every time it's read, it contains
-//             // the HTML markup. If we don't strip it first, markup will recursively be added
-//             // every time we open the edit widget and submit new values.
-//             value[i] = "<span class='label'>" + $('<p>' + value[i] + '</p>').text() + "</span>";
-//         });
-//         $(this).html(value.join(" "));
-//     }
-// });
-//
-// $('.tags').on('shown', function() {
-//     var editable = $(this).data('editable');
-//     var value;
-//     value = editable.value;
-//     $.each(value,function(i){
-//         value[i] = $('<p>' + value[i] + '</p>').text()
-//     });
-// });
-//
-// $('[id^="tags-edit-"]').click(function(e) {
-//     e.stopPropagation();
-//     e.preventDefault();
-//     $('#' + $(this).data('editable') ).editable('toggle');
-// });
-//
-// });

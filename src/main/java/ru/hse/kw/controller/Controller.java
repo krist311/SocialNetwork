@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.hse.kw.model.Task;
 import ru.hse.kw.model.User;
+import ru.hse.kw.service.TaskService;
 import ru.hse.kw.service.UserService;
 
 import java.util.List;
@@ -18,6 +17,9 @@ public class Controller {
 
     @Autowired
     UserService userService;  //Service which will do all data retrieval/manipulation work
+
+    @Autowired
+    TaskService taskService;
 
 
     //-------------------Retrieve All Users--------------------------------------------------------
@@ -32,7 +34,9 @@ public class Controller {
     }
 
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-    public HttpStatus saveTask() {
+    public HttpStatus saveTask(@RequestParam("name") String name,
+                               @RequestParam("id") int id) {
+        System.out.println("The company data (name: " + name + ") is saved");
         List<User> users = userService.findAllUsers();
         //users.add()
         return HttpStatus.OK;
@@ -51,6 +55,17 @@ public class Controller {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/gettasks/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Task>> getUser(@PathVariable("id") int user_id) {
+        System.out.println("Fetching tasks for user " + user_id);
+        List <Task> tasks = taskService.findByUserId(user_id);
+        if (tasks == null) {
+            System.out.println("Tasks with user id " + user_id + " not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getinfo/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getinfo(@PathVariable("id") int id) {
         System.out.println("Fetching User with id " + id);
@@ -61,5 +76,4 @@ public class Controller {
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
 }

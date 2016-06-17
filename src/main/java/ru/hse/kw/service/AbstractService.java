@@ -1,4 +1,4 @@
-package ru.hse.kw.dao;
+package ru.hse.kw.service;
 
 
 import java.io.Serializable;
@@ -10,12 +10,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class AbstractDao<PK extends Serializable, T> {
+public abstract class AbstractService<PK extends Serializable, T> {
 
     private final Class<T> persistentClass;
 
     @SuppressWarnings("unchecked")
-    public AbstractDao(){
+    public AbstractService(){
         this.persistentClass =(Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
@@ -23,8 +23,12 @@ public abstract class AbstractDao<PK extends Serializable, T> {
     private SessionFactory sessionFactory;
 
     protected Session getSession(){
-        Session ss = sessionFactory.getCurrentSession();
-        return ss;
+        Session session = sessionFactory.getCurrentSession();
+        return session;
+    }
+
+    protected void closeSession(){
+        sessionFactory.close();
     }
 
     @SuppressWarnings("unchecked")
@@ -41,9 +45,9 @@ public abstract class AbstractDao<PK extends Serializable, T> {
     }
 
     protected Criteria createEntityCriteria(){
-        Session ses = getSession();
-        Criteria cr = ses.createCriteria(persistentClass);
-        return cr;
+        Session session = getSession();
+        Criteria criteria = session.createCriteria(persistentClass);
+        return criteria;
     }
 
 }
