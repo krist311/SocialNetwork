@@ -22,9 +22,24 @@ public class Task {
     @Column(name = "tag", nullable = false)
     private String tag;
 
+    private String tags;
+
+    private String description;
+
+    private String date;
+
+    @Override
+    public String toString(){
+        return this.name + this.goal;
+    }
     public Task() {
     }
-
+    public Task(String name, String date, String description, String tags){
+        this.name = name;
+        this.tags = tags;
+        this.description = description;
+        this.date = date;
+    }
     public Task(int id, String name, int progress, int goal, String tag) {
         this.id = id;
         this.name = name;
@@ -43,6 +58,10 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public void setProgress(int progress) {

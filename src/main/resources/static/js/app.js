@@ -9,6 +9,14 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
     $scope.userLogin=$routeParams.login;
     $http.get('getuser/'+ $scope.userLogin).success(function(data) {
         $scope.user = data;
+        if(data.login === $rootScope.userLogin){
+        $scope.myElementClass='';
+        $scope.foreignElementClass='hidden';
+        } else {
+            $scope.myElementClass='hidden';
+            $scope.foreignElementClass='';
+        }
+
     }).error(function(){
         $location.path("/home/"+$rootScope.userLogin);
     });
@@ -57,7 +65,11 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
     $scope.saveTask = function(data, id) {
 //$scope.user not updated yet
         angular.extend(data, {id: id});
-        return $http.post('/saveUser', data);
+        $http.post('/savetask', data).success(function(data) {
+
+        }).error(function(){
+           alert("AJAX ERROR");
+        });
     };
 
 
