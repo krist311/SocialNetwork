@@ -29,12 +29,28 @@ public class Task {
     @Column(name = "tag", nullable = false)
     private String tag;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     @Column(name ="date", nullable = false)
     private Date date;
 
     @Override
     public String toString(){
-        return this.name + this.goal;
+        return this.name + this.user_id;
     }
     public Task() {
     }

@@ -15,6 +15,8 @@ import ru.hse.kw.service.TaskService;
 import ru.hse.kw.service.UserService;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +45,16 @@ public class Controller {
      public HttpStatus saveTask(@RequestBody String value) {
         BasicJsonParser jsonParser = new BasicJsonParser();
         Map taskMap = jsonParser.parseMap(value);
-        Task task = new Task((String)taskMap.get("name"),(Date)taskMap.get("date"),(String)taskMap.get("description"),(String)taskMap.get("tags"));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date date=null;
+        try {
+
+            java.util.Date jDate = sdf.parse((String) taskMap.get("date"));
+            date = new Date(jDate.getTime());
+        } catch (ParseException ex){
+            System.out.println(ex);
+        }
+        Task task = new Task((String)taskMap.get("name"),date,(String)taskMap.get("description"),(String)taskMap.get("tags"));
         return HttpStatus.OK;
     }
     @RequestMapping(value = "/registeruser", method = RequestMethod.POST)
@@ -71,6 +82,7 @@ public class Controller {
     public ResponseEntity<List<Task>> getUser(@PathVariable("id") int user_id) {
         System.out.println("Fetching tasks for user " + user_id);
         List <Task> tasks = taskService.findByUserId(user_id);
+        System.out.println(tasks.get(0).toString());
         if (tasks == null) {
             System.out.println("Tasks with user id " + user_id + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
