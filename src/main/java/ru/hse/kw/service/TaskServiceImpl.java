@@ -17,7 +17,7 @@ public class TaskServiceImpl extends AbstractService<Integer, Task> implements T
 		return getByKey(id);
 	}
 
-	public List<Task> findByUserId(int user_id) {
+	public List<Task> findByUserId(long user_id) {
 
 		Criteria criteria = createEntityCriteria();
 		List <Task> results = criteria.add(Restrictions.eq("user_id", user_id)).list();
@@ -27,5 +27,13 @@ public class TaskServiceImpl extends AbstractService<Integer, Task> implements T
 	public List<Task> findAllTasks() {
 		Criteria criteria = createEntityCriteria();
 		return (List<Task>) criteria.list();
+	}
+
+	public void save(Task task) {
+		persist(task);
+	}
+
+	public void update(Task task) {
+		update(task);
 	}
 }

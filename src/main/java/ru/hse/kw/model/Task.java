@@ -12,7 +12,7 @@ public class Task {
     private int id;
 
     @Column(name = "user_id", nullable = false)
-    private int user_id;
+    private long user_id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -21,13 +21,13 @@ public class Task {
     private String description;
 
     @Column(name = "progress", nullable = false)
-    private int progress;
+    private long progress;
 
     @Column(name = "goal", nullable = false)
-    private int goal;
+    private long goal;
 
-    @Column(name = "tag", nullable = false)
-    private String tag;
+    @Column(name = "tags", nullable = false)
+    private String tags;
 
     public Date getDate() {
         return date;
@@ -37,7 +37,7 @@ public class Task {
         this.date = date;
     }
 
-    public int getUser_id() {
+    public long getUser_id() {
         return user_id;
     }
 
@@ -54,18 +54,21 @@ public class Task {
     }
     public Task() {
     }
-    public Task(String name, Date date, String description, String tags){
+    public Task(long userId, String name, Date date, String description, String tags, long progress, long goal){
+        this.user_id = userId;
         this.name = name;
-        this.tag = tags;
+        this.tags = tags;
         this.description = description;
         this.date = date;
+        this.progress = progress;
+        this.goal = goal;
     }
-    public Task(int id, String name, int progress, int goal, String tag) {
+    public Task(int id, String name, long progress, long goal, String tags) {
         this.id = id;
         this.name = name;
         this.progress = progress;
         this.goal = goal;
-        this.tag = tag;
+        this.tags = tags;
     }
 
     public int getId() {
@@ -84,11 +87,11 @@ public class Task {
         this.description = description;
     }
 
-    public int getProgress() {
+    public long getProgress() {
         return progress;
     }
 
-    public int getGoal() {
+    public long getGoal() {
         return goal;
     }
 
@@ -100,20 +103,20 @@ public class Task {
         return name;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(long progress) {
         this.progress = progress;
     }
 
-    public void setGoal(int goal) {
+    public void setGoal(long goal) {
         this.goal = goal;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTags() {
+        return tags;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
 }

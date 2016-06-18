@@ -29,4 +29,8 @@ public class UserServiceImpl extends AbstractService<Integer, User> implements U
 		Criteria criteria = createEntityCriteria();
 		return (List<User>) criteria.list();
 	}
+
+	public void save(User user) {
+		persist(user);
+	}
 }

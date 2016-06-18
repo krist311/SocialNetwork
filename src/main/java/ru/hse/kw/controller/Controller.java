@@ -13,6 +13,7 @@ import ru.hse.kw.model.Task;
 import ru.hse.kw.model.User;
 import ru.hse.kw.service.TaskService;
 import ru.hse.kw.service.UserService;
+import static java.lang.Math.toIntExact;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -45,7 +46,7 @@ public class Controller {
      public HttpStatus saveTask(@RequestBody String value) {
         BasicJsonParser jsonParser = new BasicJsonParser();
         Map taskMap = jsonParser.parseMap(value);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-mm");
         Date date=null;
         try {
 
@@ -54,7 +55,26 @@ public class Controller {
         } catch (ParseException ex){
             System.out.println(ex);
         }
-        Task task = new Task((String)taskMap.get("name"),date,(String)taskMap.get("description"),(String)taskMap.get("tags"));
+
+        Long lid = (Long) taskMap.get("id");
+        int id = lid.intValue();
+        Task task = taskService.findById(id);
+        if (task != null) {
+            task.setName((String)taskMap.get("name"));
+            task.setDate(date);
+            task.setDescription((String)taskMap.get("description"));
+            task.setTags((String)taskMap.get("tags"));
+            task.setProgress((long) taskMap.get("progress"));
+            task.setGoal((long)taskMap.get("goal"));
+        }
+        else {
+            task = new Task((long) taskMap.get("user_id"),(String)taskMap.get("name"),date,
+                    (String)taskMap.get("description"),(String)taskMap.get("tags"), (long) taskMap.get("progress"),
+                    (long)taskMap.get("goal"));
+
+            taskService.save(task);
+        }
+
         return HttpStatus.OK;
     }
     @RequestMapping(value = "/registeruser", method = RequestMethod.POST)
@@ -82,7 +102,6 @@ public class Controller {
     public ResponseEntity<List<Task>> getUser(@PathVariable("id") int user_id) {
         System.out.println("Fetching tasks for user " + user_id);
         List <Task> tasks = taskService.findByUserId(user_id);
-        System.out.println(tasks.get(0).toString());
         if (tasks == null) {
             System.out.println("Tasks with user id " + user_id + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

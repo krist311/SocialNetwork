@@ -11,8 +11,12 @@ public interface TaskService {
 
     Task findById(int id);
 
-    List<Task> findByUserId(int user_id);
+    List<Task> findByUserId(long user_id);
 
     List<Task> findAllTasks();
 
+    void save(Task task);
+
+    void update(Task task);
 }
+
