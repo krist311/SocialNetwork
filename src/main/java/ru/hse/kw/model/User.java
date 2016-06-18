@@ -2,6 +2,7 @@ package ru.hse.kw.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name="Users")
@@ -34,6 +35,11 @@ public class User {
         this.login = login;
         this.email = email;
         this.info = info;
+    }
+    public User(String login,String password) {
+
+        this.login = login;
+        this.usersPassword=new UsersPasswords(password);
     }
 
     public long getId() {

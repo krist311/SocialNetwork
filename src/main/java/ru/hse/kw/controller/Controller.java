@@ -1,6 +1,10 @@
 package ru.hse.kw.controller;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +15,7 @@ import ru.hse.kw.service.TaskService;
 import ru.hse.kw.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class Controller {
@@ -33,12 +38,18 @@ public class Controller {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-    public HttpStatus saveTask(@RequestParam("name") String name,
-                               @RequestParam("id") int id) {
-        System.out.println("The company data (name: " + name + ") is saved");
-        List<User> users = userService.findAllUsers();
-        //users.add()
+    @RequestMapping(value = "/savetask", method = RequestMethod.POST)
+     public HttpStatus saveTask(@RequestBody String value) {
+        BasicJsonParser jsonParser = new BasicJsonParser();
+        Map taskMap = jsonParser.parseMap(value);
+        Task task = new Task((String)taskMap.get("name"),(String)taskMap.get("date"),(String)taskMap.get("description"),(String)taskMap.get("tags"));
+        return HttpStatus.OK;
+    }
+    @RequestMapping(value = "/registeruser", method = RequestMethod.POST)
+    public HttpStatus registerUser(@RequestBody String value) {
+        BasicJsonParser jsonParser = new BasicJsonParser();
+        Map taskMap = jsonParser.parseMap(value);
+        User task = new User((String)taskMap.get("login"),(String)taskMap.get("password"));
         return HttpStatus.OK;
     }
 

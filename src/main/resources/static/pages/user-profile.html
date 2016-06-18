@@ -47,9 +47,11 @@
                             <h2><strong>43</strong></h2>
                             <p><small>Completed tasks</small>
                             </p>
-                            <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Edit Page </button>
+                            <a href="/settings">
+                                <button type="button" class="btn btn-primary btn-block" ng-class="myElementClass"><span class="fa fa-gear"></span> Edit Page </button>
+                            </a>
                             <!-- HIDDEN VARIANT FOR NOT OWN PAGE: "FOLLOW/UNFOLLOW" BUTTON -->
-                            <button type="button" class="btn btn-success btn-block hidden"><span class="fa fa-plus-circle"></span> Follow </button>
+                            <button type="button"  class="btn btn-success btn-block" ng-class="foreignElementClass"><span class="fa fa-plus-circle"></span> Follow </button>
                         </div>
                         <!--/col-->
                     </div>
@@ -66,7 +68,7 @@
                                 <td style="width:15%">Date</td>
                                 <td style="width:30%">Description</td>
                                 <td style="width:20%">Tags</td>
-                                <td style="width:20%">Actions</td>
+                                <td style="width:20%" ng-class="myElementClass">Actions</td>
                             </tr>
                             <tr ng-repeat="task in tasks">
                                 <td>
@@ -108,7 +110,7 @@
                                     <!--</div>-->
 
                                 </td>
-                                <td style="white-space: nowrap">
+                                <td style="white-space: nowrap" ng-class="myElementClass">
                                     <!-- form -->
                                     <form editable-form name="rowform" onbeforesave="saveTask($data, task.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == task">
                                         <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
@@ -119,15 +121,15 @@
                                         </button>
                                     </form>
                                     <div class="buttons" ng-show="!rowform.$visible">
-                                        <button class="btn btn-success" ng-click="done($index)">done</button>
-                                        <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
-                                        <button class="btn btn-danger" ng-click="giveUp($index)">give up</button>
+                                        <button class="btn btn-success" ng-class="myElementClass" ng-click="done($index)">done</button>
+                                        <button class="btn btn-primary" ng-class="myElementClass" ng-click="rowform.$show()">edit</button>
+                                        <button class="btn btn-danger" ng-class="myElementClass" ng-click="giveUp($index)">give up</button>
                                     </div>
                                 </td>
                             </tr>
                         </table>
 
-                        <button class="btn btn-default" ng-click="addTask()">Add task</button>
+                        <button class="btn btn-default" ng-class="myElementClass" ng-click="addTask()">Add task</button>
                     </div>
 
                 </div>
