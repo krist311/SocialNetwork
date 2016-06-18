@@ -70,7 +70,7 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
     self.register = function(){
         $http.post('/registeruser', self.credentials).success(function() {
 
-            alert("Thank you for your registration")
+          //  alert("Thank you for your registration")
         }).error(function(){
             alert("Login is already in use");
         });
