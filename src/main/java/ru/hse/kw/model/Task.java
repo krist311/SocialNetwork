@@ -26,8 +26,8 @@ public class Task {
     @Column(name = "goal", nullable = false)
     private int goal;
 
-    @Column(name = "tag", nullable = false)
-    private String tag;
+    @Column(name = "tags", nullable = false)
+    private String tags;
 
     public Date getDate() {
         return date;
@@ -56,16 +56,16 @@ public class Task {
     }
     public Task(String name, Date date, String description, String tags){
         this.name = name;
-        this.tag = tags;
+        this.tags = tags;
         this.description = description;
         this.date = date;
     }
-    public Task(int id, String name, int progress, int goal, String tag) {
+    public Task(int id, String name, int progress, int goal, String tags) {
         this.id = id;
         this.name = name;
         this.progress = progress;
         this.goal = goal;
-        this.tag = tag;
+        this.tags = tags;
     }
 
     public int getId() {
@@ -108,12 +108,12 @@ public class Task {
         this.goal = goal;
     }
 
-    public String getTag() {
-        return tag;
+    public String gettags() {
+        return tags;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void settags(String tags) {
+        this.tags = tags;
     }
 
 }

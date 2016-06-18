@@ -41,7 +41,20 @@ Network.controller('FriendsCtrl',['$scope','$http', '$location', function($scope
 Network.controller('MessagesCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 }]);
-Network.controller('SettingsCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+Network.controller('SettingsCtrl',['$scope','$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
+    $http.get('getuser/' + $rootScope.userLogin).success(function (data) {
+        $scope.user = data;
+        $scope.updateduser=data;
+    }).error(function () {
+        $location.path("/home/" + $rootScope.userLogin);
+    });
+    this.saveuser = function() {
+        $http.post('/saveuser', $scope.updateduser).success(function (data) {
+
+        }).error(function () {
+            alert("AJAX ERROR");
+        });
+    };
 
 }]);
 Network.controller('LoginController', function($rootScope, $http, $location, $window) {
@@ -56,6 +69,7 @@ Network.controller('LoginController', function($rootScope, $http, $location, $wi
 
     self.register = function(){
         $http.post('/registeruser', self.credentials).success(function() {
+
             alert("Thank you for your registration")
         }).error(function(){
             alert("Login is already in use");
