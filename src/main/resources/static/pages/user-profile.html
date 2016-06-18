@@ -70,12 +70,12 @@
                                 <!--ng-repeat="follower in followers"-->
 
                                 <ul class="list-group" id="followers-list">
-                                    <li class="list-group-item">
+                                    <li class="list-group-item" ng-repeat="follower in followers">
                                         <div class="col-xs-12 col-sm-3">
-                                            <img  src="http://api.randomuser.me/portraits/men/49.jpg" alt="Scott Stevens" class="ava img-circle" />
+                                            <img  src="http://api.randomuser.me/portraits/men/49.jpg" alt="follower.name" class="ava img-circle" />
                                         </div>
                                         <div class="col-xs-12 col-sm-9">
-                                            <span class="name">Scott Stevens</span><br/>
+                                            <span class="name">{{follower.name}}</span><br/>
                                         </div>
                                         <div class="clearfix"></div>
                                     </li>

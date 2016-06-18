@@ -17,6 +17,7 @@ import ru.hse.kw.service.UserService;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,28 @@ public class Controller {
     TaskService taskService;
 
 
+    @RequestMapping(value = "/getfollowing/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<User>> getFollowing(@PathVariable("id") int id) {
+        System.out.println("Fetching User with login " + id);
+        User user = userService.findById(id);
+        if (user == null) {
+            System.out.println("User with id " + id + " not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<User> list = new ArrayList<>()
+        return new ResponseEntity<>(new ArrayList<User>()user, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getfollowers/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getFollowers(@PathVariable("id") int id) {
+        System.out.println("Fetching User with login " + id);
+        User user = userService.findById(id);
+        if (user == null) {
+            System.out.println("User with id " + id + " not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
     //-------------------Retrieve All Users--------------------------------------------------------
 
     @RequestMapping(value = "/user1234", method = RequestMethod.GET)

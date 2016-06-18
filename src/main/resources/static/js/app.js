@@ -22,6 +22,16 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
         }).error(function () {
             alert('Unable to fetch tasks');
         });
+        $http.get('getfollowers/' + $scope.currentId).success(function (data) {
+            $scope.followers = data;
+        }).error(function () {
+            alert('Unable to fetch followers');
+        });
+        $http.get('getfollowing/' + $scope.currentId).success(function (data) {
+            $scope.following = data;
+        }).error(function () {
+            alert('Unable to fetch followers');
+        });
     }).error(function () {
         $location.path("/home/" + $rootScope.userLogin);
     });
