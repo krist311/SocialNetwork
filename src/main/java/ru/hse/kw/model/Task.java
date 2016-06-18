@@ -1,6 +1,7 @@
 package ru.hse.kw.model;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "Tasks")
@@ -28,7 +29,8 @@ public class Task {
     @Column(name = "tag", nullable = false)
     private String tag;
 
-    private String date;
+    @Column(name ="date", nullable = false)
+    private Date date;
 
     @Override
     public String toString(){
@@ -36,7 +38,7 @@ public class Task {
     }
     public Task() {
     }
-    public Task(String name, String date, String description, String tags){
+    public Task(String name, Date date, String description, String tags){
         this.name = name;
         this.tag = tags;
         this.description = description;

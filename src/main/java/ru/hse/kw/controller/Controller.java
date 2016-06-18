@@ -14,6 +14,7 @@ import ru.hse.kw.model.User;
 import ru.hse.kw.service.TaskService;
 import ru.hse.kw.service.UserService;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class Controller {
      public HttpStatus saveTask(@RequestBody String value) {
         BasicJsonParser jsonParser = new BasicJsonParser();
         Map taskMap = jsonParser.parseMap(value);
-        Task task = new Task((String)taskMap.get("name"),(String)taskMap.get("date"),(String)taskMap.get("description"),(String)taskMap.get("tags"));
+        Task task = new Task((String)taskMap.get("name"),(Date)taskMap.get("date"),(String)taskMap.get("description"),(String)taskMap.get("tags"));
         return HttpStatus.OK;
     }
     @RequestMapping(value = "/registeruser", method = RequestMethod.POST)
