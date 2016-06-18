@@ -1,5 +1,6 @@
 package ru.hse.kw.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -28,6 +29,14 @@ public class UserServiceImpl extends AbstractService<Integer, User> implements U
 	public List<User> findAllUsers() {
 		Criteria criteria = createEntityCriteria();
 		return (List<User>) criteria.list();
+	}
+
+	public List<User> findUsersByIds(List<Integer> ids){
+		List<User> users = new ArrayList<>();
+		for (int id : ids){
+			users.add(findById(id));
+		}
+		return users;
 	}
 
 	public void save(User user) {

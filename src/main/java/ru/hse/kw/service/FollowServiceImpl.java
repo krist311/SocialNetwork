@@ -14,17 +14,17 @@ import java.util.List;
 @Transactional
 public class FollowServiceImpl extends AbstractService<Integer, Follow> implements FollowService{
 
-	public List<Long> getFollowingList(long user_id) {
+	public List<Integer> getFollowingList(int user_id) {
 		Criteria criteria = createEntityCriteria();
-		criteria.setProjection(Projections.property("user_id_who"));
-		List <Long> results = criteria.add(Restrictions.eq("user_id_who", user_id)).list();
+		criteria.setProjection(Projections.property("user_id_on_whom"));
+		List <Integer> results = criteria.add(Restrictions.eq("user_id_who", user_id)).list();
 		return results;
 	}
 
-	public List<Long> getFollowersList(long user_id){
+	public List<Integer> getFollowersList(int user_id){
 		Criteria criteria = createEntityCriteria();
-		criteria.setProjection(Projections.property("user_id_on_whom"));
-		List <Long> results = criteria.add(Restrictions.eq("user_id_on_whom", user_id)).list();
+		criteria.setProjection(Projections.property("user_id_who"));
+		List <Integer> results = criteria.add(Restrictions.eq("user_id_on_whom", user_id)).list();
 		return results;
 	}
 

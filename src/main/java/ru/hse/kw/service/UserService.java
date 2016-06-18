@@ -14,4 +14,6 @@ public interface UserService {
 	List<User> findAllUsers();
 
 	void save(User user);
+
+	List<User> findUsersByIds(List<Integer> ids);
 }

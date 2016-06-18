@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hse.kw.model.Task;
 import ru.hse.kw.model.User;
+import ru.hse.kw.service.FollowService;
 import ru.hse.kw.service.TaskService;
 import ru.hse.kw.service.UserService;
 import static java.lang.Math.toIntExact;
@@ -31,17 +32,20 @@ public class Controller {
     @Autowired
     TaskService taskService;
 
+    @Autowired
+    FollowService followService;
+
 
     @RequestMapping(value = "/getfollowing/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getFollowing(@PathVariable("id") int id) {
         System.out.println("Fetching User with login " + id);
-        User user = userService.findById(id);
-        if (user == null) {
+        List<User> users = userService.findUsersByIds( followService.getFollowingList(id));
+        if (users == null) {
             System.out.println("User with id " + id + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<User> list = new ArrayList<>()
-        return new ResponseEntity<>(new ArrayList<User>()user, HttpStatus.OK);
+        List<User> list = new ArrayList<>();
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getfollowers/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

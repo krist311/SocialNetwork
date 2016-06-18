@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface FollowService {
 
-    List<Long> getFollowingList(long user_id);
+    List<Integer> getFollowingList(int user_id);
 
-    List<Long> getFollowersList(long user_id);
+    List<Integer> getFollowersList(int user_id);
 
     void save(Follow follow);
 }
