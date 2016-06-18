@@ -63,6 +63,7 @@ public class Task {
         this.progress = progress;
         this.goal = goal;
     }
+
     public Task(int id, String name, long progress, long goal, String tags) {
         this.id = id;
         this.name = name;
