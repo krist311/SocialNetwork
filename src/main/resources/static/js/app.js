@@ -68,13 +68,16 @@ Network.controller('EditableRowCtrl', function($scope, $filter, $http, $routePar
             name: '',
             date: '',
             description: '',
-            tags: ''
+            tags: '',
+            progress : '',
+            goals: ''
         };
         $scope.tasks.push($scope.inserted);
     };
     $scope.saveTask = function (data, id) {
 //$scope.user not updated yet
         angular.extend(data, {id: id});
+        angular.extend(data, {user_id: $scope.user.id});
         $http.post('/savetask', data).success(function (data) {
 
         }).error(function () {

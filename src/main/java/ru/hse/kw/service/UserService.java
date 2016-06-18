@@ -12,5 +12,6 @@ public interface UserService {
 	User findByLogin(String login);
 
 	List<User> findAllUsers();
-	
+
+	void save(User user);
 }

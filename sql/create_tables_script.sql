@@ -27,12 +27,13 @@ PRIMARY KEY (user_id_who, user_id_on_whom)
 
 create table tasks (
 id integer,
+date date,
 user_id integer references users(id),
 name text NOT NULL,
 description text NOT NULL,
 progress integer,
 goal integer,
-tag text,
+tags text,
 PRIMARY KEY (id)
 );
 
@@ -48,6 +49,6 @@ INSERT INTO followers VALUES
 (1, 2);
 
 INSERT INTO tasks VALUES
-(1, 1, 'task 1', 'task1 for user 1', 1, 5, 'tasks'),
-(2, 1, 'task 2', 'task2 for user 1', 0, 3, 'tasks'),
-(3, 1, 'task 3', 'task3 for user 1', 2, 4, 'tasks');
+(1, TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 1', 'task1 for user 1', 1, 5, 'tasks'),
+(2, TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 2', 'task2 for user 1', 0, 3, 'tasks'),
+(3, TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 3', 'task3 for user 1', 2, 4, 'tasks');
