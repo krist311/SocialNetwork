@@ -1,7 +1,247 @@
+<script>
+    $(function () {
+
+        size_li = $("#followers-list li").size();
+        x=3;
+        $('#followers-list li:lt('+x+')').show();
+        $('#showMoreFollowers').click(function () {
+            x= (x+3 <= size_li) ? x+3 : size_li;
+            $('#followers-list li:lt('+x+')').show();
+        });
+
+        size_li = $("#followings-list li").size();
+        x=3;
+        $('#followings-list li:lt('+x+')').show();
+        $('#showMoreFollowings').click(function () {
+            x= (x+3 <= size_li) ? x+3 : size_li;
+            $('#followings-list li:lt('+x+')').show();
+        });
+
+        $('#followers-list').searchable({
+            searchField: '#followers-list-search',
+            selector: 'li',
+            childSelector: '.col-xs-12',
+            show: function( elem ) {
+                elem.slideDown(100);
+            },
+            hide: function( elem ) {
+                elem.slideUp( 100 );
+            }
+        })
+
+        $('#followings-list').searchable({
+            searchField: '#followings-list-search',
+            selector: 'li',
+            childSelector: '.col-xs-12',
+            show: function( elem ) {
+                elem.slideDown(100);
+            },
+            hide: function( elem ) {
+                elem.slideUp( 100 );
+            }
+        })
+    });
+</script>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="well panel panel-default">
+
+                 <!--Modal for Followers -->
+                <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="followersLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h3 class="modal-title" id="followersLabel">Follower List</h3>
+                                <!--<div class="col-xs-12">-->
+                                    <div class="input-group c-search">
+                                        <input type="text" class="form-control" id="followers-list-search">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                                        </span>
+                                    </div>
+                                <!--</div>-->
+                            </div>
+                            <!--<div class="modal-body">-->
+
+                                <!--IDK HOW TO CREATE A SCOPE FOR -->
+                                <!--ng-repeat="follower in followers"-->
+
+                                <ul class="list-group" id="followers-list">
+                                    <li class="list-group-item">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <img  src="http://api.randomuser.me/portraits/men/49.jpg" alt="Scott Stevens" class="ava img-circle" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <span class="name">Scott Stevens</span><br/>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <img src="http://api.randomuser.me/portraits/men/97.jpg" alt="Seth Frazier" class="ava img-circle" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <span class="name">Seth Frazier</span><br/>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <img src="http://api.randomuser.me/portraits/women/90.jpg" alt="Jean Myers" class="ava img-circle" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <span class="name">Jean Myers</span><br/>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <img src="http://api.randomuser.me/portraits/men/24.jpg" alt="Todd Shelton" class="ava img-circle" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <span class="name">Todd Shelton</span><br/>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <img src="http://api.randomuser.me/portraits/women/34.jpg" alt="Rosemary Porter" class="ava img-circle" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <span class="name">Rosemary Porter</span><br/>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <img src="http://api.randomuser.me/portraits/women/56.jpg" alt="Debbie Schmidt" class="ava img-circle" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <span class="name">Debbie Schmidt</span><br/>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <img src="http://api.randomuser.me/portraits/women/76.jpg" alt="Glenda Patterson" class="ava img-circle" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <span class="name">Glenda Patterson</span><br/>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                </ul>
+
+                            <!--</div>-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="showMoreFollowers">Show more</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--Modal for Followings -->
+                <div class="modal fade" id="followings" tabindex="-1" role="dialog" aria-labelledby="followingsLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h3 class="modal-title" id="followingsLabel">Follower List</h3>
+                                <!--<div class="col-xs-12">-->
+                                <div class="input-group c-search">
+                                    <input type="text" class="form-control" id="followings-list-search">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                                        </span>
+                                </div>
+                                <!--</div>-->
+                            </div>
+                            <!--<div class="modal-body">-->
+
+                            <!--IDK HOW TO CREATE A SCOPE FOR -->
+                            <!--ng-repeat="follower in followings"-->
+
+                            <ul class="list-group" id="followings-list">
+                                <li class="list-group-item">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <img  src="http://api.randomuser.me/portraits/men/49.jpg" alt="Scott Stevens" class="ava img-circle" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9">
+                                        <span class="name">Scott Stevens</span><br/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <img src="http://api.randomuser.me/portraits/men/97.jpg" alt="Seth Frazier" class="ava img-circle" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9">
+                                        <span class="name">Seth Frazier</span><br/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <img src="http://api.randomuser.me/portraits/women/90.jpg" alt="Jean Myers" class="ava img-circle" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9">
+                                        <span class="name">Jean Myers</span><br/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <img src="http://api.randomuser.me/portraits/men/24.jpg" alt="Todd Shelton" class="ava img-circle" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9">
+                                        <span class="name">Todd Shelton</span><br/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <img src="http://api.randomuser.me/portraits/women/34.jpg" alt="Rosemary Porter" class="ava img-circle" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9">
+                                        <span class="name">Rosemary Porter</span><br/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <img src="http://api.randomuser.me/portraits/women/56.jpg" alt="Debbie Schmidt" class="ava img-circle" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9">
+                                        <span class="name">Debbie Schmidt</span><br/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <img src="http://api.randomuser.me/portraits/women/76.jpg" alt="Glenda Patterson" class="ava img-circle" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9">
+                                        <span class="name">Glenda Patterson</span><br/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                            </ul>
+
+                            <!--</div>-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="showMoreFollowings">Show more</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 text-center">
@@ -31,16 +271,16 @@
                         <div class="clearfix"></div>
                         <div class="col-xs-12 col-sm-4 text-center">
                             <h2><strong> 20,7K </strong></h2>
-                            <p><small>Followers</small>
+                            <p><small>followings</small>
                             </p>
-                            <button class="btn btn-info btn-block"><span class="fa fa-th-list"></span> Follower List </button>
+                            <button data-toggle="modal" data-target="#followers" class="btn btn-info btn-block"><span class="fa fa-th-list"></span> Follower List </button>
                         </div>
                         <!--/col-->
                         <div class="col-xs-12 col-sm-4 text-center">
                             <h2><strong>245</strong></h2>
                             <p><small>Following</small>
                             </p>
-                            <button class="btn btn-info btn-block"><span class="fa fa-th-list"></span> Following List </button>
+                            <button data-toggle="modal" data-target="#followings" class="btn btn-info btn-block"><span class="fa fa-th-list"></span> Following List </button>
                         </div>
                         <!--/col-->
                         <div class="col-xs-12 col-sm-4 text-center">
@@ -97,17 +337,6 @@
                                     <span editable-text="task.tags" e-name="tags" e-form="rowform" e-required>
                                       {{ task.tags }}
                                     </span>
-
-
-                                    <!--<div id="container" class="row">-->
-                                        <!--<div class="controls controls-row">-->
-                                            <!--<span class="tags" id="tags-editable-1"-->
-                                                <!--data-toggle="manual" data-type="select2" data-pk="1"-->
-                                                <!--data-value="apples, oranges, pie" data-original-title="Enter tags">-->
-                                            <!--</span>-->
-                                            <!--<a href="#" id="tags-edit-1" data-editable="tags-editable-1" class=""><i class="icon-pencil"></i></a>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
 
                                 </td>
                                 <td style="white-space: nowrap" ng-class="myElementClass">
