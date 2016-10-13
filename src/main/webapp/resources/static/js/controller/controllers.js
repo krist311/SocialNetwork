@@ -6,7 +6,7 @@ Network.config(['$routeProvider', '$httpProvider','$locationProvider', function(
     $routeProvide
         .when('/home/:login',{
             templateUrl:'pages/user-profile.html',
-            controller:'EditableRowCtrl as ctrl'
+            controller:'EditableRowCtrl'
         })
         .when('/friends',{
             templateUrl:'pages/friends.html',
@@ -20,9 +20,9 @@ Network.config(['$routeProvider', '$httpProvider','$locationProvider', function(
             templateUrl:'pages/settings.html',
             controller:'SettingsCtrl'
         })
-        .when('/exit',{
+        .when('/login',{
             templateUrl:'pages/sign-in-sign-up.html',
-            controller:'LoginController as ctrl'
+            controller:'LoginController'
         });
 
     //.otherwise({

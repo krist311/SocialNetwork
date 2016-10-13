@@ -1,25 +1,26 @@
 package ru.hse.kw.controller;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import jdk.nashorn.internal.parser.JSONParser;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.hse.kw.model.Task;
 import ru.hse.kw.model.User;
 import ru.hse.kw.service.FollowService;
 import ru.hse.kw.service.TaskService;
 import ru.hse.kw.service.UserService;
-import static java.lang.Math.toIntExact;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import java.util.Map;
 public class Controller {
 
     @Autowired
-    UserService userService;  //Service which will do all data retrieval/manipulation work
+    UserService userService;
 
     @Autowired
     TaskService taskService;
@@ -45,7 +46,7 @@ public class Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<User> list = new ArrayList<>();
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getfollowers/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,8 +72,18 @@ public class Controller {
 
     @RequestMapping(value = "/savetask", method = RequestMethod.POST)
      public HttpStatus saveTask(@RequestBody String value) {
-        BasicJsonParser jsonParser = new BasicJsonParser();
-        Map taskMap = jsonParser.parseMap(value);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> taskMap = new HashMap<String, Object>();
+
+        try {
+            // convert JSON string to Map
+            taskMap = mapper.readValue(value, new TypeReference<Map<String, String>>(){});
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-mm");
         Date date=null;
         try {
@@ -91,13 +102,13 @@ public class Controller {
             task.setDate(date);
             task.setDescription((String)taskMap.get("description"));
             task.setTags((String)taskMap.get("tags"));
-            task.setProgress((long) taskMap.get("progress"));
-            task.setGoal((long)taskMap.get("goal"));
+            task.setProgress((Long) taskMap.get("progress"));
+            task.setGoal((Long)taskMap.get("goal"));
         }
         else {
-            task = new Task((long) taskMap.get("user_id"),(String)taskMap.get("name"),date,
-                    (String)taskMap.get("description"),(String)taskMap.get("tags"), (long) taskMap.get("progress"),
-                    (long)taskMap.get("goal"));
+            task = new Task((Long) taskMap.get("user_id"),(String)taskMap.get("name"),date,
+                    (String)taskMap.get("description"),(String)taskMap.get("tags"), (Long) taskMap.get("progress"),
+                    (Long)taskMap.get("goal"));
 
             taskService.save(task);
         }
@@ -106,8 +117,18 @@ public class Controller {
     }
     @RequestMapping(value = "/registeruser", method = RequestMethod.POST)
     public HttpStatus registerUser(@RequestBody String value) {
-        BasicJsonParser jsonParser = new BasicJsonParser();
-        Map taskMap = jsonParser.parseMap(value);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> taskMap = new HashMap<String, Object>();
+
+        try {
+            // convert JSON string to Map
+            taskMap = mapper.readValue(value, new TypeReference<Map<String, String>>(){});
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         User task = new User((String)taskMap.get("login"),(String)taskMap.get("password"));
         return HttpStatus.OK;
     }
@@ -145,5 +166,10 @@ public class Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "sing-in-sign-up";
     }
 }

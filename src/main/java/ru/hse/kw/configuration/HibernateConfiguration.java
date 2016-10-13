@@ -1,4 +1,4 @@
-package ru.hse.kw;
+package ru.hse.kw.configuration;
 
 import java.util.Properties;
 
