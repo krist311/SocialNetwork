@@ -3,10 +3,13 @@ package ru.hse.kw.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityView;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
@@ -15,27 +18,22 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = "ru.hse.kw")
 public class AppConfiguration extends WebMvcConfigurerAdapter{
-
+    /*
+     * Configure View Resolver
+     */
     @Bean
-    public VelocityConfigurer velocityConfig() {
-        VelocityConfigurer velocityConfigurer = new VelocityConfigurer();
-        velocityConfigurer.setResourceLoaderPath("/WEB-INF/velocity/");
-        return velocityConfigurer;
-    }
-
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        VelocityViewResolver viewResolver = new VelocityViewResolver();
-
-        viewResolver.setViewClass(VelocityView.class);
-        viewResolver.setCache(true);
-        viewResolver.setPrefix("");
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/resources/static/pages/");
         viewResolver.setSuffix(".html");
-        viewResolver.setExposeSpringMacroHelpers(true);
-
-        registry.viewResolver(viewResolver);
+        return viewResolver;
     }
 
+    /*
+     * Configure ResourceHandlers to serve static resources like CSS/ Javascript etc...
+     *
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
