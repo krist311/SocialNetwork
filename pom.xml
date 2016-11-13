@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.websystique.springmvc</groupId>
-	<artifactId>Spring4MVCAngularJSRoutingWithUIRouterExample</artifactId>
+	<groupId>ru.hse.kw</groupId>
+	<artifactId>SocialNetwork</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Spring4MVCAngularJSRoutingWithUIRouterExample Maven Webapp</name>
+	<name>SocialNetwork Maven Webapp</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -140,13 +140,13 @@
 					<version>2.4</version>
 					<configuration>
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<warName>Spring4MVCAngularJSRoutingWithUIRouterExample</warName>
+						<warName>SocialNetwork</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<finalName>Spring4MVCAngularJSRoutingWithUIRouterExample</finalName>
+		<finalName>SocialNetwork</finalName>
 	</build>
 
 </project>
