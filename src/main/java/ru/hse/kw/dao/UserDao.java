@@ -12,6 +12,8 @@ public interface UserDao {
 
     User findById(int id);
 
+    User findByLogin(String login);
+
     void saveUser(User user);
 
     List<User> findAllUsers();

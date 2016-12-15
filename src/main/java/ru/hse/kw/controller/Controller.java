@@ -39,10 +39,9 @@ public class Controller {
 
     @RequestMapping(value = "/getfollowing/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getFollowing(@PathVariable("id") int id) {
-        System.out.println("Fetching User with login " + id);
         List<User> users = userService.findUsersByIds( followService.getFollowingList(id));
         if (users == null) {
-            System.out.println("User with id " + id + " not found");
+            System.out.println("Users not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<User> list = new ArrayList<>();
@@ -50,18 +49,17 @@ public class Controller {
     }
 
     @RequestMapping(value = "/getfollowers/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getFollowers(@PathVariable("id") int id) {
-        System.out.println("Fetching User with login " + id);
-        User user = userService.findById(id);
-        if (user == null) {
-            System.out.println("User with id " + id + " not found");
+    public ResponseEntity<List<User>> getFollowers(@PathVariable("id") int id) {
+        List<User> users = userService.findUsersByIds( followService.getFollowersList(id));
+        if (users == null) {
+            System.out.println("Users not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
     //-------------------Retrieve All Users--------------------------------------------------------
 
-    @RequestMapping(value = "/user1234", method = RequestMethod.GET)
+    @RequestMapping(value = "/allusers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
         if (users.isEmpty()) {

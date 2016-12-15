@@ -28,11 +28,7 @@ public class UserServiceImpl extends AbstractService<Integer, User> implements U
 	}
 
 	public User findByLogin(String login) {
-
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("login", login));
-		User user = (User) criteria.uniqueResult();
-		return user;
+		return dao.findByLogin(login);
 	}
 
 	public List<User> findAllUsers() {
@@ -48,7 +44,7 @@ public class UserServiceImpl extends AbstractService<Integer, User> implements U
 	}
 
 	public void save(User user) {
-		persist(user);
+		dao.saveUser(user);
 	}
 
 	public void update(User user) {
