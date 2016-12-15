@@ -14,6 +14,12 @@ public class UsersPasswords {
     private String password;
 
     public UsersPasswords(){}
+
+    public UsersPasswords(int userId, String password){
+        this.setUserId(userId);
+        this.setPassword(password);
+    }
+
     public UsersPasswords(String password){
         this.password = password;
     }

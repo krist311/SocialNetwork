@@ -10,14 +10,10 @@ id integer,
 login text NOT NULL,
 email text NOT NULL,
 info text NOT NULL,
+password text NOT NULL,
 PRIMARY KEY (id)
 );
 
-create table users_passwords (
-user_id integer references users(id),
-password text NOT NULL,
-PRIMARY KEY (user_id)
-);
 
 create table followers (
 user_id_who integer references users(id),
@@ -38,12 +34,9 @@ PRIMARY KEY (id)
 );
 
 INSERT INTO users VALUES
-(1, 'user1', 'user1@gmail.com', 'user1_info'),
-(2, 'user2', 'user2@gmail.com', 'user2_info');
+(1, 'user1', 'user1@gmail.com', 'user1_info', 'password'),
+(2, 'user2', 'user2@gmail.com', 'user2_info', 'password');
 
-INSERT INTO users_passwords VALUES
-(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'),
-(2, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
 INSERT INTO followers VALUES
 (1, 2);

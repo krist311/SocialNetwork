@@ -24,25 +24,24 @@ public class User {
     @Column(name = "info", nullable = false)
     private String info;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private UsersPasswords usersPassword;
+    @Column(name = "password", nullable = false)
+    private String password;
 
     public User() {}
 
     public User(int id, String login, String email, String info, String password) {
-        this.id = id;
-        this.login = login;
-        this.email = email;
-        this.info = info;
+        this.setId(id);
+        this.setLogin(login);
+        this.setEmail(email);
+        this.setInfo(info);
+        this.setPassword(password);
     }
     public User(String login,String password) {
-
-        this.login = login;
-        this.usersPassword=new UsersPasswords(password);
+        this.setLogin(login);
+        this.setPassword(password);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -74,13 +73,11 @@ public class User {
         return email;
     }
 
-
-    public UsersPasswords getUsersPassword() {
-        return usersPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUsersPassword(UsersPasswords usersPassword) {
-        this.usersPassword = usersPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
 }

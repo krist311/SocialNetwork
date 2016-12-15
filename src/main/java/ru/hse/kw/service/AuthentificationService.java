@@ -24,7 +24,7 @@ public class AuthentificationService implements UserDetailsService {
 
         GrantedAuthority authority = new SimpleGrantedAuthority("USER");
         UserDetails userDetails = (UserDetails)new org.springframework.security.core.userdetails.User(user.getLogin(),
-                user.getUsersPassword().getPassword(), Arrays.asList(authority));
+                user.getPassword(), Arrays.asList(authority));
 
         return userDetails;
     }

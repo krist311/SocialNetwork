@@ -133,6 +133,32 @@ public class Controller {
         return HttpStatus.OK;
     }
 
+    @RequestMapping(value = "/updateuserinfo", method = RequestMethod.PUT)
+    public HttpStatus updateUserInfo(@RequestBody String value) {
+        System.out.println("Update User with  " + value);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> userInfo = new HashMap<String, Object>();
+
+        try {
+            // convert JSON string to Map
+            userInfo = mapper.readValue(value, new TypeReference<Map<String, String>>(){});
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Integer id = Integer.valueOf((String) userInfo.get("id"));
+        User user = userService.findById(id);
+        if (user != null) {
+            user.setLogin((String)userInfo.get("login"));
+            user.setInfo((String)userInfo.get("info"));
+            user.setEmail((String)userInfo.get("email"));
+            user.setPassword((String)userInfo.get("password"));
+            userService.update(user);
+        }
+        return HttpStatus.OK;
+    }
+
     //-------------------Retrieve Single User--------------------------------------------------------
 
     @RequestMapping(value = "/getuser/{login}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
