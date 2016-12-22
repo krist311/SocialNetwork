@@ -1,4 +1,4 @@
-package ru.hse.kw.controller;
+package ru.hse.kw;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -68,8 +68,9 @@ public class Controller {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/savetask", method = RequestMethod.POST)
-     public HttpStatus saveTask(@RequestBody String value) {
+    @RequestMapping(value = "/savetask", method = RequestMethod.PUT)
+     public ResponseEntity<Integer> saveTask(@RequestBody String value) {
+        System.out.println("Update Task with  " + value);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> taskMap = new HashMap<String, Object>();
 
@@ -92,27 +93,36 @@ public class Controller {
             System.out.println(ex);
         }
 
-        Long lid = (Long) taskMap.get("id");
-        int id = lid.intValue();
-        Task task = taskService.findById(id);
+        Integer id = null;
+        String sid;
+        if ((sid = (String) taskMap.get("id")) != null) {
+            id = Integer.valueOf(sid);
+        }
+
+        Task task = null;
+        if (id != null) {
+            task = taskService.findById(id);
+        }
         if (task != null) {
             task.setName((String)taskMap.get("name"));
             task.setDate(date);
             task.setDescription((String)taskMap.get("description"));
             task.setTags((String)taskMap.get("tags"));
-            task.setProgress((Long) taskMap.get("progress"));
-            task.setGoal((Long)taskMap.get("goal"));
+            task.setProgress(Long.valueOf((String) taskMap.get("progress")));
+            task.setGoal(Long.valueOf((String)taskMap.get("goal")));
+            taskService.updateTask(task);
         }
         else {
-            task = new Task((Long) taskMap.get("user_id"),(String)taskMap.get("name"),date,
-                    (String)taskMap.get("description"),(String)taskMap.get("tags"), (Long) taskMap.get("progress"),
-                    (Long)taskMap.get("goal"));
-
-            taskService.save(task);
+            task = new Task(Long.valueOf((String) taskMap.get("user_id")),(String)taskMap.get("name"),date,
+                    (String)taskMap.get("description"),(String)taskMap.get("tags"), Long.valueOf((String) taskMap.get("progress")),
+                    Long.valueOf((String)taskMap.get("goal")));
+            id = task.getId();
+            taskService.saveTask(task);
         }
 
-        return HttpStatus.OK;
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/registeruser", method = RequestMethod.POST)
     public HttpStatus registerUser(@RequestBody String value) {
         ObjectMapper mapper = new ObjectMapper();

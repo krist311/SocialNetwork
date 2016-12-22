@@ -9,11 +9,20 @@ public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "user_id_who", nullable = false)
     private int user_id_who;
 
     @Column(name = "user_id_on_whom", nullable = false)
     private int user_id_on_whom;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getUser_id_who() {
         return user_id_who;

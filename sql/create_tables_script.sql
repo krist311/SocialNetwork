@@ -6,7 +6,7 @@ DROP TABLE if exists followers;
 DROP TABLE if exists users;
 
 create table users (
-id integer,
+id serial NOT NULL,
 login text NOT NULL,
 email text NOT NULL,
 info text NOT NULL,
@@ -22,26 +22,37 @@ PRIMARY KEY (user_id_who, user_id_on_whom)
 );
 
 create table tasks (
-id integer,
+id serial NOT NULL,
 date date,
 user_id integer references users(id),
-name text NOT NULL,
-description text NOT NULL,
+name text,
+description text,
 progress integer,
 goal integer,
 tags text,
 PRIMARY KEY (id)
 );
 
-INSERT INTO users VALUES
-(1, 'user1', 'user1@gmail.com', 'user1_info', 'password'),
-(2, 'user2', 'user2@gmail.com', 'user2_info', 'password');
+INSERT INTO users (login, email, info, password) VALUES
+('user1', 'user1@gmail.com', 'user1 info', 'password'),
+('user2', 'user2@gmail.com', 'user2 info', 'password'),
+('user3', 'user3@gmail.com', 'user3 info', 'password'),
+('user4', 'user4@gmail.com', 'user4 info', 'password'),
+('user5', 'user5@gmail.com', 'user5 info', 'password');
 
 
 INSERT INTO followers VALUES
-(1, 2);
+(2, 1),
+(3, 1),
+(4, 1),
+(3, 2),
+(5, 2);
 
-INSERT INTO tasks VALUES
-(1, TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 1', 'task1 for user 1', 1, 5, 'tasks'),
-(2, TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 2', 'task2 for user 1', 0, 3, 'tasks'),
-(3, TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 3', 'task3 for user 1', 2, 4, 'tasks');
+INSERT INTO tasks (date,user_id,name,description,progress, goal,tags) VALUES
+(TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 1', 'task1 for user 1', 1, 5, 'tasks'),
+(TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 2', 'task2 for user 1', 0, 3, 'tasks'),
+(TO_DATE('01012017', 'DDMMYYYY'), 1, 'task 3', 'task3 for user 1', 2, 4, 'tasks'),
+(TO_DATE('01012017', 'DDMMYYYY'), 2, 'task 1', 'task1 for user 2', 2, 4, 'tasks'),
+(TO_DATE('01012017', 'DDMMYYYY'), 2, 'task 2', 'task2 for user 2', 2, 4, 'tasks'),
+(TO_DATE('01012017', 'DDMMYYYY'), 3, 'task 3', 'task3 for user 2', 2, 4, 'tasks'),
+(TO_DATE('01012017', 'DDMMYYYY'), 3, 'task 4', 'task4 for user 2', 2, 4, 'tasks');

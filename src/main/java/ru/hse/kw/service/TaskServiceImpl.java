@@ -2,10 +2,11 @@ package ru.hse.kw.service;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.hse.kw.dao.TaskDao;
 import ru.hse.kw.model.Task;
-import ru.hse.kw.model.User;
 
 import java.util.List;
 
@@ -13,27 +14,32 @@ import java.util.List;
 @Transactional
 public class TaskServiceImpl extends AbstractService<Integer, Task> implements TaskService{
 
+	@Autowired
+	TaskDao dao;
+
 	public Task findById(int id) {
-		return getByKey(id);
+		return dao.findById(id);
 	}
 
 	public List<Task> findByUserId(long user_id) {
-
-		Criteria criteria = createEntityCriteria();
-		List <Task> results = criteria.add(Restrictions.eq("user_id", user_id)).list();
-		return results;
+		return dao.findByUserId(user_id);
 	}
 
 	public List<Task> findAllTasks() {
-		Criteria criteria = createEntityCriteria();
-		return (List<Task>) criteria.list();
+		return dao.findAllTasks();
 	}
 
-	public void save(Task task) {
-		persist(task);
+	public void saveTask(Task task) {
+		dao.saveTask(task);
 	}
 
-	public void update(Task task) {
-		update(task);
+	public void updateTask(Task task) {
+		Task entity = dao.findById(task.getId());
+		if(entity!=null){
+			entity.setName(task.getName());
+			entity.setDescription(task.getDescription());
+			entity.setProgress(task.getProgress());
+			entity.setDate(task.getDate());
+		}
 	}
 }

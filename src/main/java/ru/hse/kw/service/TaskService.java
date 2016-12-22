@@ -15,8 +15,8 @@ public interface TaskService {
 
     List<Task> findAllTasks();
 
-    void save(Task task);
+    void saveTask(Task task);
 
-    void update(Task task);
+    void updateTask(Task task);
 }
 
